@@ -21,5 +21,7 @@ public with sharing class LoggerWrapperTest {
         request.setBody(jsonAsString);
         request.setHeader('content-type', 'json');
         LoggerWrapper logger = new LoggerWrapper(request);
+
+        // [SELECT ]
     }
 }

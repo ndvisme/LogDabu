@@ -1,18 +1,18 @@
 public with sharing class FileMakerFromHTTP {
 
     private static final String JSON_FORMAT = 'json';
-    public ContentVersion file;
+    public ContentVersion requestfile;
 
 
     public FileMakerFromHTTP(HttpRequest request, Logger__c logger) {
         System.debug('Making File');
-        this.file = make(request, logger);
+        this.requestfile = makeRequestFile(request, logger);
     }
 
-    private ContentVersion make(HttpRequest request, Logger__c logger) {
+    private ContentVersion makeRequestFile(HttpRequest request, Logger__c logger) {
         String formatType = getFormatTypeFrom(request);
         if(formatType == JSON_FORMAT) {
-            this.file = makeFileJSONFormat(request, logger);
+            this.requestfile = makeFileJSONFormat(request, logger);
         }
         else {
             throw new LoggeCustomException(
@@ -20,7 +20,7 @@ public with sharing class FileMakerFromHTTP {
                 );
         }
 
-        return this.file;
+        return this.requestfile;
     }
 
     private String getFormatTypeFrom(HttpRequest request) {

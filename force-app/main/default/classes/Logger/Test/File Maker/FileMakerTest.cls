@@ -46,7 +46,7 @@ public with sharing class FileMakerTest {
         System.debug('Start test: \'test_createRequestJsonFile\'');
         HttpRequest request = createPostJSONRequest();
         LoggerWrapper logger = new LoggerWrapper(request);
-        ContentVersion requestBodyFile = logger.requestFileMaker.file;
+        ContentVersion requestBodyFile = logger.requestFileMaker.requestfile;
         Integer numOfLines = getNumberOfTxtLinesFrom(requestBodyFile);
 
         System.assertEquals(4, numOfLines);

@@ -1,6 +1,6 @@
 public with sharing class LoggerWrapper {
 
-    private ContentVersion requestBodyFile;
+    public ContentVersion requestBodyFile;
     private Logger__c logger;
 
     public LoggerWrapper(HttpRequest request) {

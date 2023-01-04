@@ -9,24 +9,18 @@ public with sharing class FileMakerFromHTTP {
         this.requestfile = makeRequestFile(request, logger);
     }
 
-    private ContentVersion makeRequestFile(HttpRequest request, Logger__c logger) {
-        String formatType = getFormatTypeFrom(request);
-        if(formatType == JSON_FORMAT) {
+     private ContentVersion makeRequestFile(HttpRequest request, Logger__c logger) {
+        if(LoggerUtils.httpRequestIsJSON(request)) {
             this.requestfile = makeFileJSONFormat(request, logger);
         }
         else {
             throw new LoggeCustomException(
-                LoggeCustomException.UNSOPURTTED_FORMAT + formatType
+                LoggeCustomException.UNSOPURTTED_FORMAT + 
+                LoggerUtils.getFormatTypeFrom(request)
                 );
         }
 
         return this.requestfile;
-    }
-
-    private String getFormatTypeFrom(HttpRequest request) {
-        String formatType = request.getHeader('content-type');
-
-        return formatType;
     }
 
     private ContentVersion makeFileJSONFormat(HttpRequest request, Logger__c logger) {

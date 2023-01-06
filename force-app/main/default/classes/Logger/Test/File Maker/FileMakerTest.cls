@@ -11,9 +11,10 @@ public with sharing class FileMakerTest {
     public static void test_unsaporttedFormat() {
         System.debug('Started test: \'test_unsaporttedFormat\'');
         HttpRequest request = makeXMLHTTPRequest();
+        HttpResponse response = TestDataFactory.createErrorHTTPJSONResponse();
         String format = getFormatFrom(request);
         try {
-            LoggerWrapper logger = new LoggerWrapper(request);
+            LoggerWrapper logger = new LoggerWrapper(request, response);
         }
         catch(LoggeCustomException err) {
             System.assertEquals(
@@ -45,7 +46,8 @@ public with sharing class FileMakerTest {
     public static void test_createRequestJsonFile() {
         System.debug('Start test: \'test_createRequestJsonFile\'');
         HttpRequest request = createPostJSONRequest();
-        LoggerWrapper logger = new LoggerWrapper(request);
+        HttpResponse response = TestDataFactory.createErrorHTTPJSONResponse();
+        LoggerWrapper logger = new LoggerWrapper(request, response);
         ContentVersion requestBodyFile = logger.requestFileMaker.requestfile;
         Integer numOfLines = getNumberOfTxtLinesFrom(requestBodyFile);
 
@@ -64,7 +66,7 @@ public with sharing class FileMakerTest {
         return request;
     }
 
-    private static Integer getNumberOfTxtLinesFrom(ContentVersion requestBodyFile) {
+    public static Integer getNumberOfTxtLinesFrom(ContentVersion requestBodyFile) {
         Integer numOfLines = -1;
         Blob versionDataBlob = requestBodyFile.VersionData;
         String versionDataString = versionDataBlob.toString();

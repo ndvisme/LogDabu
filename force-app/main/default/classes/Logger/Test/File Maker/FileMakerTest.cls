@@ -45,25 +45,13 @@ public with sharing class FileMakerTest {
 
     public static void test_createRequestJsonFile() {
         System.debug('Start test: \'test_createRequestJsonFile\'');
-        HttpRequest request = createPostJSONRequest();
+        HttpRequest request = TestDataFactory.createPostJSONRequest();
         HttpResponse response = TestDataFactory.createErrorHTTPJSONResponse();
         LoggerWrapper logger = new LoggerWrapper(request, response);
         ContentVersion requestBodyFile = logger.requestFileMaker.requestfile;
         Integer numOfLines = getNumberOfTxtLinesFrom(requestBodyFile);
 
         System.assertEquals(4, numOfLines);
-    }
-
-    private static HttpRequest createPostJSONRequest() {
-        String jsonAsString = '{"name" : "Jhon", "Last Name" : "Doe"}';
-        HttpRequest request = new HttpRequest();
-        request.setEndpoint('http://www.yahoo.com');
-        request.setMethod('POST');
-        request.setBody(jsonAsString);
-        request.setHeader('content-type', 'json');
-        System.debug('HTTP Request Created: \n' + request);
-
-        return request;
     }
 
     public static Integer getNumberOfTxtLinesFrom(ContentVersion requestBodyFile) {

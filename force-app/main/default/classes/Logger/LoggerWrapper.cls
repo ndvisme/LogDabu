@@ -10,7 +10,7 @@ public with sharing class LoggerWrapper {
 
     public LoggerWrapper(HttpRequest request, HttpResponse response) {
         System.debug('In \'LoggerWrapper Constuctor\'.');
-        this.logger = createLogger();
+        this.logger = createLogger(request, response);
         this.requestFile = createRequestFile(request, this.logger);
         this.responseFile = createResponseFile(response, this.logger);
     }
@@ -32,10 +32,13 @@ public with sharing class LoggerWrapper {
         return this.requestFile;
     }
 
-    private Logger__c createLogger() {
+    private Logger__c createLogger(HttpRequest request, HttpResponse response) {
         Logger__c logger = new Logger__c();
 		insert logger;
-        System.debug('Created \'Logger__c\', Id: ' + logger.Id);
+        PopulateLoggerHelper.fromRequest(request, logger);
+        PopulateLoggerHelper.fromResponse(response, logger);
+        update logger;
+        System.debug('Created \'Logger__c\': ' + logger);
 
         return logger;
     }

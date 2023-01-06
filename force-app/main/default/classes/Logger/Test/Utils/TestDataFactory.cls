@@ -19,4 +19,17 @@ public with sharing class TestDataFactory {
 
 		return response;
     }
+
+    public static HttpRequest createPostJSONRequest() {
+        String jsonAsString = '{"name" : "Jhon", "Last Name" : "Doe"}';
+        HttpRequest request = new HttpRequest();
+        request.setEndpoint('http://www.yahoo.com');
+        request.setMethod('POST');
+        request.setBody(jsonAsString);
+        request.setHeader('content-type', 'json');
+        System.debug('HTTP Request Created: \n' + request);
+
+        return request;
+    }
+
 }

@@ -9,7 +9,11 @@ public with sharing class CustomSettingsControllerWrapper {
     public static void checkThatAreSingletons(List<Logg_Controller__c> controllers) {
         for (Logg_Controller__c controller : controllers) {
             if (notSingleton(controller)) {
-                controller.addError('Failed to insert this account!');
+                controller.addError(
+                    'Controllers must be a \'Singleton\' record.' +
+                    'Can\'t insert this controller: ' + controller +
+                    'A smiliar controller (SAME \'recordType\' exsists). '
+                    );
             }
         }
     }

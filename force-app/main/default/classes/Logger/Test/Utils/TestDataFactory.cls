@@ -1,13 +1,19 @@
 @isTest
 public with sharing class TestDataFactory {
 
-    public static Logger__c createLoggerUsingDefaultValues() {
+    public static LoggerWrapper createDefaultLoggerWrapper() {
         LoggerWrapper wrapper = new LoggerWrapper(
             createPostJSONRequest(),
             createOKHTTPJSONResponse(),
             createDefultCOntroller()
         );
         System.debug('Created this default LoggerWrapper: \n ' + wrapper);
+
+        return wrapper;
+    }
+
+    public static Logger__c createLoggerUsingDefaultValues() {
+        LoggerWrapper wrapper = createDefaultLoggerWrapper();
 
         return wrapper.logger;
     }
@@ -21,14 +27,14 @@ public with sharing class TestDataFactory {
         return logger;
     }
 
-    public static Logger_Controller__c createDefultCOntroller() {
-        Logger_Controller__c controller = new Logger_Controller__c();
+    public static Logg_Controller__c createDefultCOntroller() {
+        Logg_Controller__c controller = new Logg_Controller__c();
         insert controller;
         controller = CustomSettingsControllerWrapper.queryCntrollerAllFields(
             controller.Id
             );
         System.debug(
-            'This custom settgins Logger_Controller__c was created: ' +
+            'This custom settgins Logg_Controller__c was created: ' +
             controller
             );
 
@@ -65,6 +71,26 @@ public with sharing class TestDataFactory {
         System.debug('HTTP Request Created: \n' + request);
 
         return request;
+    }
+
+    public static Account createAccount() {
+        Account acc = new Account(
+            Name = 'Jhon'
+        );
+        insert acc;
+        System.debug('Created this Account: ' + acc);
+
+        return acc;
+    }
+
+    public static Contact createContact() {
+        Contact con = new Contact(
+            LastName = 'Doe'
+        );
+        insert con;
+        System.debug('Created this Contact: ' + con);
+
+        return con;
     }
 
 }

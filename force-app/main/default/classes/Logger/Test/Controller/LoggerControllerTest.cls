@@ -2,7 +2,8 @@
 public with sharing class LoggerControllerTest {
 
 
-    public static Logger_Controller__c controller = TestDataFactory.createDefultCOntroller();
+    public static String TEST_LOOKUP_API_FIELD_NAME = 'TEST_DO_NOT_DELTE_Account__c';
+    public static Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
 
 
     @isTest
@@ -54,7 +55,7 @@ public with sharing class LoggerControllerTest {
 
     public static void test_customName() {
         controller.Log_Only_Failures__c = false;
-        controller.Record_names__c = 'Custom Name';
+        controller.Logger_Record_Names__c = 'Custom Name';
         update controller;
         HttpRequest request = TestDataFactory.createPostJSONRequest();
         HttpResponse respones = TestDataFactory.createOKHTTPJSONResponse();
@@ -71,7 +72,7 @@ public with sharing class LoggerControllerTest {
 
         System.assertEquals(1, loggers.size());
         System.assert(loggers[0].Name.containsAny(
-            controller.Record_names__c
+            controller.Logger_Record_Names__c
             )
         );
     }
@@ -93,7 +94,7 @@ public with sharing class LoggerControllerTest {
 
         System.assertEquals(1, loggers.size());
         System.assert(loggers[0].Name.containsAny(
-            controller.Record_names__c
+            controller.Logger_Record_Names__c
             )
         );
     }

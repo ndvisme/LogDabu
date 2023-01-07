@@ -3,7 +3,46 @@ public with sharing class LoggerControllerTest {
 
 
     public static String TEST_LOOKUP_API_FIELD_NAME = 'TEST_DO_NOT_DELTE_Account__c';
-    public static Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
+
+
+    @isTest
+    public static void test_controllersAreSingleton() {
+        System.debug('Starting test: \'test_controllersAreSingleton\'.');
+        Logg_Controller__c defult = TestDataFactory.createDefultCOntroller();
+        Logg_Controller__c custom = TestDataFactory.createCustomController();
+        Set<String> ids = new Set<String>();
+        ids.add(defult.Id); ids.add(custom.Id);
+        Integer numOfRecords = [
+            SELECT COUNT()
+            FROM Logg_Controller__c
+            WHERE Id IN : ids
+            ];
+
+        System.assertEquals(2, numOfRecords);
+    }
+
+    @isTest
+    public static void test_controllersAreNotSingleton() {
+        System.debug('Starting test: \'test_controllersAreNotSingleton\'.');
+        Logg_Controller__c custom1 = new Logg_Controller__c();
+        Logg_Controller__c custom2 = new Logg_Controller__c();
+        try {
+            custom1 = TestDataFactory.createCustomController();
+            custom2 = TestDataFactory.createCustomController();
+        }
+        catch (Exception e) {
+            System.debug(e.getMessage());
+        }
+        Set<String> ids = new Set<String>();
+        ids.add(custom1.Id); ids.add(custom2.Id);
+        Integer numOfRecords = [
+            SELECT COUNT()
+            FROM Logg_Controller__c
+            WHERE Id IN : ids
+            ];
+
+        System.assertEquals(1, numOfRecords);
+    }
 
 
     @isTest
@@ -15,6 +54,7 @@ public with sharing class LoggerControllerTest {
     @isTest
     public static void test_noLogShouldBeCreated() {
         System.debug('Starting test: test_noLogShouldBeCreated.');
+        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
         controller.Log_Only_Failures__c = true;
         update controller;
         HttpRequest request = TestDataFactory.createPostJSONRequest();
@@ -32,6 +72,7 @@ public with sharing class LoggerControllerTest {
     @isTest
     public static void test_logShouldBeCreated() {
         System.debug('Starting test: test_logShouldBeCreated.');
+        Logg_Controller__c controller = TestDataFactory.createCustomController();
         controller.Log_Only_Failures__c = false;
         update controller;
         HttpRequest request = TestDataFactory.createPostJSONRequest();
@@ -81,7 +122,7 @@ public with sharing class LoggerControllerTest {
     }
 
     public static void test_customName() {
-        controller = TestDataFactory.createCustomController();
+        Logg_Controller__c controller = TestDataFactory.createCustomController();
         HttpRequest request = TestDataFactory.createPostJSONRequest();
         HttpResponse respones = TestDataFactory.createOKHTTPJSONResponse();
         LoggerWrapper loggerWrapper = new LoggerWrapper(
@@ -103,6 +144,7 @@ public with sharing class LoggerControllerTest {
     }
 
     public static void test_defaultName() {
+        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
         controller.Log_Only_Failures__c = false;
         update controller;
         controller = CustomSettingsControllerWrapper.queryCntrollerAllFields(

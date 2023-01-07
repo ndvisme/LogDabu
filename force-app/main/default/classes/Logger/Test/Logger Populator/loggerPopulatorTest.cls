@@ -27,7 +27,7 @@ public with sharing class loggerPopulatorTest {
     private static void test_invalidGivenLookUp() {
         System.debug('Started test: test_invalidGivenLookUp');
         Contact con = TestDataFactory.createContact();
-        LoggerWrapper loggerWrapper = TestDataFactory.createDefaultLoggerWrapper();
+        LoggerWrapper loggerWrapper = TestDataFactory.createCustomControllerLoggerWrapper();
         try {
             loggerWrapper.setSObjectLookup('Contact', con.Id);
         }

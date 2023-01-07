@@ -30,7 +30,7 @@ public with sharing class LoggerWrapperTest {
 
     private static void test_logRecordsFromControllerNameField() {
         System.debug('Started test: \'test_logRecordsFromControllerNameField\'');
-        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
+        Logg_Controller__c controller = TestDataFactory.createCustomController();
         controller.Logger_Record_Names__c = null;
         update controller;
         LoggerWrapper loggerWrapper = new LoggerWrapper(

@@ -28,7 +28,31 @@ public with sharing class TestDataFactory {
     }
 
     public static Logg_Controller__c createDefultCOntroller() {
-        Logg_Controller__c controller = new Logg_Controller__c();
+        String recordTypeId = CustomSettingsControllerWrapper.queryRecordTypeIdFromLabel(
+            CustomSettingsControllerWrapper.RECORDTYPE_NAME_DEFAULT
+            );
+        Logg_Controller__c controller = createControllerWithThisRecordTypeId(
+            recordTypeId
+            );
+
+        return controller;
+    }
+
+    public static Logg_Controller__c createCustomController() {
+        String recordTypeId = CustomSettingsControllerWrapper.queryRecordTypeIdFromLabel(
+            CustomSettingsControllerWrapper.RECORDTYPE_NAME_TEST_DUMMY
+            );
+        Logg_Controller__c controller = createControllerWithThisRecordTypeId(
+            recordTypeId
+            );
+
+        return controller;
+    }
+
+    private static Logg_Controller__c createControllerWithThisRecordTypeId(String recordTypeId) {
+        Logg_Controller__c controller = new Logg_Controller__c(
+            RecordTypeId = recordTypeId
+        );
         insert controller;
         controller = CustomSettingsControllerWrapper.queryCntrollerAllFields(
             controller.Id

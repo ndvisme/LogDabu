@@ -54,9 +54,7 @@ public with sharing class LoggerControllerTest {
     }
 
     public static void test_customName() {
-        controller.Log_Only_Failures__c = false;
-        controller.Logger_Record_Names__c = 'Custom Name';
-        update controller;
+        controller = TestDataFactory.createCustomController();
         HttpRequest request = TestDataFactory.createPostJSONRequest();
         HttpResponse respones = TestDataFactory.createOKHTTPJSONResponse();
         LoggerWrapper loggerWrapper = new LoggerWrapper(

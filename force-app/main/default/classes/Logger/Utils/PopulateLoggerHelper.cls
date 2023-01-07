@@ -1,5 +1,24 @@
 public with sharing class PopulateLoggerHelper {
 
+    public static Logger__c createBasic(Logger_Controller__c controller) {
+        Logger__c logger  = new Logger__c(
+            Name = controller.Record_names__c
+        );
+        logger = fromCustomSettings(logger);
+		insert logger;
+        System.debug(
+            'Created this basic Logger__c record: \n' +
+            logger
+        );
+
+        return logger;
+    }
+
+    public static Logger__c fromCustomSettings(Logger__c logger) {
+
+
+        return logger;
+    }
 
     public static Logger__c fromRequest(HttpRequest request, Logger__c logger) {
         logger = putAPIVerb(request, logger);

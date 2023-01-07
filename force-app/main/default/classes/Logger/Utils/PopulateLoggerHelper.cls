@@ -1,9 +1,9 @@
 public with sharing class PopulateLoggerHelper {
 
     public static Logger__c createBasic(Logg_Controller__c controller) {
-        Integer count = LoggerUtils.queryAmountOfLoggerRecords();
+        String recordName = createLogRecordName(controller);
         Logger__c logger  = new Logger__c(
-            Name = controller.Logger_Record_Names__c +  ' ' + String.valueOf(count),
+            Name = recordName,
             Logger_Controller__c = controller.Id
         );
 		insert logger;
@@ -13,6 +13,22 @@ public with sharing class PopulateLoggerHelper {
         );
 
         return logger;
+    }
+
+    private static String createLogRecordName(Logg_Controller__c controller) {
+        String recordName = '';
+        Integer count = LoggerUtils.queryAmountOfLoggerRecords();
+        String controllerLogRecordNames = controller.Logger_Record_Names__c;
+        if (controllerLogRecordNames != null && controllerLogRecordNames != '') {
+            recordName = controllerLogRecordNames;
+        }
+        else {
+            recordName = controller.Name;
+        }
+        recordName = recordName +  ' ' + String.valueOf(count);
+        System.debug('This log record name will be: ' + recordName);
+
+        return recordName;
     }
 
     public static Logger__c fromRequest(HttpRequest request, Logger__c logger) {

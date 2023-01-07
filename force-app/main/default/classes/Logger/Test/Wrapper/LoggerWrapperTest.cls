@@ -1,22 +1,46 @@
 @isTest
 public with sharing class LoggerWrapperTest {
 
+
+    private static HttpRequest request = TestDataFactory.createPostJSONRequest();
+    private static HttpResponse response = TestDataFactory.createErrorHTTPJSONResponse();
+
+
     @isTest
     public static void test_loggerName() {
         System.debug('Started test: \'test_loggerName\'');
-        Logger__c logger = TestDataFactory.createLoggerUsingDefaultValues();
-        Integer loggerRecordAmount = [SELECT COUNT() FROM Logger__c];
 
-        System.assert(logger.Name.contains(
-            LoggerUtils.DEFAULT_RECORD_NAME
-            )
-        );
-        System.assert(logger.Name.contains(
-            String.valueOf(loggerRecordAmount - 1)
-            )
-        );
+        test_logRecordsFromControllerLogRecordNameField();
+        test_logRecordsFromControllerNameField();
     }
 
+    private static void test_logRecordsFromControllerLogRecordNameField() {
+        System.debug('Started test: \'test_logRecordsFromControllerLogRecordNameField\'');
+        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
+        controller.Logger_Record_Names__c = 'Jhon Does';
+        update controller;
+        LoggerWrapper loggerWrapper = new LoggerWrapper(
+            request,
+            response,
+            controller
+        );
+
+        System.assert(loggerWrapper.logger.Name.contains(controller.Logger_Record_Names__c));
+    }
+
+    private static void test_logRecordsFromControllerNameField() {
+        System.debug('Started test: \'test_logRecordsFromControllerNameField\'');
+        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
+        controller.Logger_Record_Names__c = null;
+        update controller;
+        LoggerWrapper loggerWrapper = new LoggerWrapper(
+            request,
+            response,
+            controller
+        );
+
+        System.assert(loggerWrapper.logger.Name.contains(controller.Name));
+    }
 
     @isTest
     public static void test_statusCodeField() {

@@ -10,6 +10,27 @@ public with sharing class TestDataFactory {
         return logger;
     }
 
+    public static Logger_Controller__c createDefultCOntroller() {
+        Logger_Controller__c controller = new Logger_Controller__c();
+        insert controller;
+        System.debug(
+            'This custom settgins Logger_Controller__c was created: ' +
+            controller
+            );
+
+        return controller;
+    }
+
+    public static HttpResponse createOKHTTPJSONResponse() {
+        HttpResponse response = new HttpResponse();
+        response.setStatusCode(200);
+        response.setHeader('content-type', 'json');
+        response.setBody(TestJSONCreater.httpValidResponse());
+        System.debug('Created this HTTP response: \n' +  response);
+
+		return response;
+    }
+
     public static HttpResponse createErrorHTTPJSONResponse() {
         HttpResponse response = new HttpResponse();
         response.setStatusCode(400);

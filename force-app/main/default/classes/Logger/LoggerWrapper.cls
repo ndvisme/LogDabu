@@ -1,18 +1,25 @@
 public with sharing class LoggerWrapper {
 
 
-    private Logger__c logger;
+    public Logger__c logger;
     public FileMakerFromHTTP requestFileMaker;
     public HttpResponseFileMaker responseFileMaker;
     public ContentVersion requestFile;
     public ContentVersion responseFile;
 
 
-    public LoggerWrapper(HttpRequest request, HttpResponse response) {
+    public LoggerWrapper(HttpRequest request, HttpResponse response, Logger_Controller__c controller) {
         System.debug('In \'LoggerWrapper Constuctor\'.');
-        this.logger = createLogger(request, response);
-        this.requestFile = createRequestFile(request, this.logger);
-        this.responseFile = createResponseFile(response, this.logger);
+        try{
+            this.logger = createLogger(request, response, controller);
+            this.requestFile = createRequestFile(request, this.logger);
+            this.responseFile = createResponseFile(response, this.logger);
+        }
+        catch(LoggeCustomException e) {
+            System.debug(
+                'The following exception has occurred: ' + e.getMessage()
+                );
+        }
     }
 
     private ContentVersion createResponseFile(HttpResponse response, Logger__c logger) {
@@ -32,13 +39,24 @@ public with sharing class LoggerWrapper {
         return this.requestFile;
     }
 
-    private Logger__c createLogger(HttpRequest request, HttpResponse response) {
-        Logger__c logger = new Logger__c();
-		insert logger;
-        PopulateLoggerHelper.fromRequest(request, logger);
-        PopulateLoggerHelper.fromResponse(response, logger);
-        update logger;
-        System.debug('Created \'Logger__c\': ' + logger);
+    private Logger__c createLogger(HttpRequest request, HttpResponse response, Logger_Controller__c controller) {
+        Logger__c logger;
+        if (CustomSettingsControllerWrapper.shouldCreateLogger(response, controller)) {
+            logger = PopulateLoggerHelper.createBasic(controller);
+            logger = PopulateLoggerHelper.fromRequest(request, logger);
+            logger = PopulateLoggerHelper.fromResponse(response, logger);
+            update logger;
+            System.debug('Created \'Logger__c\': ' + logger);
+        }
+        else {
+            System.debug(
+                'Din\'t create \'Logger__c\'. ' +
+                LoggeCustomException.CANT_CREATE_LOGGER_BECAUSE_OF_CONTROLLER
+                );
+            throw new LoggeCustomException(
+                LoggeCustomException.CANT_CREATE_LOGGER_BECAUSE_OF_CONTROLLER
+                );
+        }
 
         return logger;
     }

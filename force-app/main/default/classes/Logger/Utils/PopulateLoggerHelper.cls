@@ -1,9 +1,9 @@
 public with sharing class PopulateLoggerHelper {
 
-    public static Logger__c createBasic(Logger_Controller__c controller) {
-        Integer count = [SELECT count() FROM Logger__c];
+    public static Logger__c createBasic(Logg_Controller__c controller) {
+        Integer count = LoggerUtils.queryAmountOfLoggerRecords();
         Logger__c logger  = new Logger__c(
-            Name = controller.Record_names__c +  ' ' + String.valueOf(count)
+            Name = controller.Logger_Record_Names__c +  ' ' + String.valueOf(count)
         );
 		insert logger;
         System.debug(

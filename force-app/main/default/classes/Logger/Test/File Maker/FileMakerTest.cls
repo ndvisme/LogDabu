@@ -12,7 +12,7 @@ public with sharing class FileMakerTest {
         System.debug('Started test: \'test_unsaporttedFormat\'');
         HttpRequest request = makeXMLHTTPRequest();
         HttpResponse response = TestDataFactory.createErrorHTTPJSONResponse();
-        Logger_Controller__c controller = TestDataFactory.createDefultCOntroller();
+        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
         String format = getFormatFrom(request);
         try {
             LoggerWrapper loggerWrapper = new LoggerWrapper(
@@ -52,7 +52,7 @@ public with sharing class FileMakerTest {
         System.debug('Start test: \'test_createRequestJsonFile\'');
         HttpRequest request = TestDataFactory.createPostJSONRequest();
         HttpResponse response = TestDataFactory.createErrorHTTPJSONResponse();
-        Logger_Controller__c controller = TestDataFactory.createDefultCOntroller();
+        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
         LoggerWrapper loggerWrapper = new LoggerWrapper(
             request,
             response,

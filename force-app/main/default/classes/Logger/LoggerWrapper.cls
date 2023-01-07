@@ -8,7 +8,7 @@ public with sharing class LoggerWrapper {
     public ContentVersion responseFile;
 
 
-    public LoggerWrapper(HttpRequest request, HttpResponse response, Logger_Controller__c controller) {
+    public LoggerWrapper(HttpRequest request, HttpResponse response, Logg_Controller__c controller) {
         System.debug('In \'LoggerWrapper Constuctor\'.');
         try{
             this.logger = createLogger(request, response, controller);
@@ -39,18 +39,17 @@ public with sharing class LoggerWrapper {
         return this.requestFile;
     }
 
-    private Logger__c createLogger(HttpRequest request, HttpResponse response, Logger_Controller__c controller) {
+    private Logger__c createLogger(HttpRequest request, HttpResponse response, Logg_Controller__c controller) {
         Logger__c logger;
-        if (CustomSettingsControllerWrapper.shouldCreateLogger(response, controller)) {
-            logger = PopulateLoggerHelper.createBasic(controller);
-            logger = PopulateLoggerHelper.fromRequest(request, logger);
-            logger = PopulateLoggerHelper.fromResponse(response, logger);
-            update logger;
-            System.debug('Created \'Logger__c\': ' + logger);
+        Boolean shouldCreated = CustomSettingsControllerWrapper.shouldCreateLogger(
+            response,
+            controller
+            );
+        if (shouldCreated) {
+            logger = initLoggerWith(controller, request, response);
         }
         else {
             System.debug(
-                'Din\'t create \'Logger__c\'. ' +
                 LoggeCustomException.CANT_CREATE_LOGGER_BECAUSE_OF_CONTROLLER
                 );
             throw new LoggeCustomException(
@@ -59,5 +58,33 @@ public with sharing class LoggerWrapper {
         }
 
         return logger;
+    }
+
+    private Logger__c initLoggerWith(Logg_Controller__c controller, HttpRequest request, HttpResponse response) {
+        Logger__c logger = PopulateLoggerHelper.createBasic(controller);
+        logger = PopulateLoggerHelper.fromRequest(request, logger);
+        logger = PopulateLoggerHelper.fromResponse(response, logger);
+        update logger;
+        System.debug('Created \'Logger__c\': ' + logger);
+
+        return logger;
+    }
+
+    public void setSObjectLookup(String lookFielAPIName, String id) {
+        try{
+            this.logger.put(lookFielAPIName, id);
+            update this.logger;
+        }
+        catch(Exception e) {
+            throw new LoggeCustomException(
+                LoggeCustomException.tryToConnectInvalidLookup(
+                    lookFielAPIName
+                    )
+                );
+        }
+        System.debug(
+            'Updated SObject lookup in this logger: ' +
+            this.logger
+            );
     }
 }

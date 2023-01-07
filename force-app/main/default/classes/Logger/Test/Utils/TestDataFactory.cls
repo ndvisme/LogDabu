@@ -20,7 +20,10 @@ public with sharing class TestDataFactory {
 
 
     public static Logger__c createLogger() {
-        Logger__c logger = new Logger__c();
+        Logg_Controller__c controller = createDefultCOntroller();
+        Logger__c logger = new Logger__c(
+            Logger_Controller__c = controller.Id
+        );
         insert logger;
         System.debug('Created this Logger__c: \n ' + logger);
 

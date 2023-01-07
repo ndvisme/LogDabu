@@ -3,7 +3,8 @@ public with sharing class PopulateLoggerHelper {
     public static Logger__c createBasic(Logg_Controller__c controller) {
         Integer count = LoggerUtils.queryAmountOfLoggerRecords();
         Logger__c logger  = new Logger__c(
-            Name = controller.Logger_Record_Names__c +  ' ' + String.valueOf(count)
+            Name = controller.Logger_Record_Names__c +  ' ' + String.valueOf(count),
+            Logger_Controller__c = controller.Id
         );
 		insert logger;
         System.debug(

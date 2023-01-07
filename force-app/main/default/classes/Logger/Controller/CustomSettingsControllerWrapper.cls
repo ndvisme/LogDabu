@@ -6,6 +6,43 @@ public with sharing class CustomSettingsControllerWrapper {
     public static final String RECORDTYPE_NAME_TEST_DUMMY = 'Dummy For Testing Porpuses';
 
 
+    public static void checkThatAreSingletons(List<Logg_Controller__c> controllers) {
+        for (Logg_Controller__c controller : controllers) {
+            if (notSingleton(controller)) {
+                controller.addError('Failed to insert this account!');
+            }
+        }
+    }
+
+    private static Boolean notSingleton(Logg_Controller__c controller) {
+        Boolean thisControllerExsistsAlready = false;
+        Set<String> exsistingRecordsInDB = queryAllExsistingControllers();
+        String recordTypeName = getRecordTypeName(controller);
+        if (exsistingRecordsInDB.contains(recordTypeName)) {
+            thisControllerExsistsAlready = true;
+        }
+
+        return thisControllerExsistsAlready;
+    }
+
+    private static Set<String> queryAllExsistingControllers() {
+        Set<String> exsistingRecordsInDB = new Set<String>();
+        List<Logg_Controller__c> controllers = [
+            SELECT RecordTypeId
+            FROM Logg_Controller__c
+            ];
+        for (Logg_Controller__c controller : controllers) {
+            exsistingRecordsInDB.add(
+                recordTypeMap.get(controller.RecordTypeId)
+                );
+        }
+        System.debug(
+            'All exsisting Controllers in the DB: ' + exsistingRecordsInDB
+            );
+
+        return exsistingRecordsInDB;
+    }
+
     public static List<Logg_Controller__c> populateName(List<Logg_Controller__c> controllers) {
         for(Logg_Controller__c controller : controllers) {
             String recordTypeName = getRecordTypeName(controller);

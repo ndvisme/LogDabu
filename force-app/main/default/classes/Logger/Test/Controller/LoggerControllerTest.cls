@@ -47,10 +47,37 @@ public with sharing class LoggerControllerTest {
     }
 
     @isTest
+    public static void test_controllerName() {
+        System.debug('Starting test: \'test_controllerName\'.');
+        test_defaultControllerName();
+        test_customControllerName();
+    }
+
+    @isTest
     public static void test_defaultRecordNames() {
         System.debug('Starting test: test_defaultRecordNames.');
         test_defaultName();
         test_customName();
+    }
+
+    private static void test_defaultControllerName() {
+        System.debug('Started test: \'test_defaultControllerName\'.');
+        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
+
+        System.assertEquals(
+            CustomSettingsControllerWrapper.RECORDTYPE_NAME_DEFAULT,
+            controller.Name
+            );
+    }
+
+    private static void test_customControllerName() {
+        System.debug('Started test: \'test_customControllerName\'.');
+        Logg_Controller__c controller = TestDataFactory.createCustomController();
+
+        System.assertEquals(
+            CustomSettingsControllerWrapper.RECORDTYPE_NAME_TEST_DUMMY,
+            controller.Name
+            );
     }
 
     public static void test_customName() {

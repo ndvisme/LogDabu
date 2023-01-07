@@ -2,7 +2,7 @@ public with sharing class LoggerUtils {
 
 
     private static final String JSON_FORMAT = 'json';
-    private static final String DEFAULT_RECORD_NAME = 'API Logger';
+    public static final String DEFAULT_RECORD_NAME = 'API Logger';
 
 
 

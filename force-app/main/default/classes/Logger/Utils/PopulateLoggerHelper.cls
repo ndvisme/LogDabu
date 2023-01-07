@@ -1,21 +1,15 @@
 public with sharing class PopulateLoggerHelper {
 
     public static Logger__c createBasic(Logger_Controller__c controller) {
+        Integer count = [SELECT count() FROM Logger__c];
         Logger__c logger  = new Logger__c(
-            Name = controller.Record_names__c
+            Name = controller.Record_names__c +  ' ' + String.valueOf(count)
         );
-        logger = fromCustomSettings(logger);
 		insert logger;
         System.debug(
             'Created this basic Logger__c record: \n' +
             logger
         );
-
-        return logger;
-    }
-
-    public static Logger__c fromCustomSettings(Logger__c logger) {
-
 
         return logger;
     }

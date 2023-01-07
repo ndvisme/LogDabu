@@ -1,6 +1,17 @@
 @isTest
 public with sharing class TestDataFactory {
 
+    public static Logger__c createLoggerUsingDefaultValues() {
+        LoggerWrapper wrapper = new LoggerWrapper(
+            createPostJSONRequest(),
+            createOKHTTPJSONResponse(),
+            createDefultCOntroller()
+        );
+        System.debug('Created this default LoggerWrapper: \n ' + wrapper);
+
+        return wrapper.logger;
+    }
+
 
     public static Logger__c createLogger() {
         Logger__c logger = new Logger__c();
@@ -13,6 +24,9 @@ public with sharing class TestDataFactory {
     public static Logger_Controller__c createDefultCOntroller() {
         Logger_Controller__c controller = new Logger_Controller__c();
         insert controller;
+        controller = CustomSettingsControllerWrapper.queryCntrollerAllFields(
+            controller.Id
+            );
         System.debug(
             'This custom settgins Logger_Controller__c was created: ' +
             controller

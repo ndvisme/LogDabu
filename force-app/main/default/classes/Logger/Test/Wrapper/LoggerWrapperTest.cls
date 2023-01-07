@@ -1,6 +1,22 @@
 @isTest
 public with sharing class LoggerWrapperTest {
 
+    @isTest
+    public static void test_loggerName() {
+        System.debug('Started test: \'test_loggerName\'');
+        Logger__c logger = TestDataFactory.createLoggerUsingDefaultValues();
+        Integer loggerRecordAmount = [SELECT COUNT() FROM Logger__c];
+
+        System.assert(logger.Name.contains(
+            LoggerUtils.DEFAULT_RECORD_NAME
+            )
+        );
+        System.assert(logger.Name.contains(
+            String.valueOf(loggerRecordAmount - 1)
+            )
+        );
+    }
+
 
     @isTest
     public static void test_statusCodeField() {

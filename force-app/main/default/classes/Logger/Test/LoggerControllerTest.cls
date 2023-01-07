@@ -70,7 +70,10 @@ public with sharing class LoggerControllerTest {
             ];
 
         System.assertEquals(1, loggers.size());
-        System.assertEquals(controller.Record_names__c, loggers[0].Name);
+        System.assert(loggers[0].Name.containsAny(
+            controller.Record_names__c
+            )
+        );
     }
 
     public static void test_defaultName() {
@@ -89,6 +92,9 @@ public with sharing class LoggerControllerTest {
         List<Logger__c> loggers = [SELECT Name FROM Logger__c];
 
         System.assertEquals(1, loggers.size());
-        System.assertEquals(controller.Record_names__c, loggers[0].Name);
+        System.assert(loggers[0].Name.containsAny(
+            controller.Record_names__c
+            )
+        );
     }
 }

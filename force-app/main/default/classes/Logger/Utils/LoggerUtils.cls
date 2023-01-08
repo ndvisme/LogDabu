@@ -4,11 +4,10 @@ public with sharing class LoggerUtils {
     private static final String JSON_FORMAT = 'json';
     public static final String DEFAULT_RECORD_NAME = 'API Logger';
 
+
     public static Integer queryAmountOfLoggerRecords() {
         return [SELECT count() FROM Logger__c];
     }
-
-
 
     public static Boolean httpRequestIsJSON(HttpRequest request) {
         Boolean isJson = false;

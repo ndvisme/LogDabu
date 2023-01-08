@@ -10,9 +10,7 @@ public with sharing class CustomSettingsControllerWrapper {
         for (Logg_Controller__c controller : controllers) {
             if (notSingleton(controller)) {
                 controller.addError(
-                    'Controllers must be a \'Singleton\' record.' +
-                    'Can\'t insert this controller: ' + controller +
-                    'A smiliar controller (SAME \'recordType\' exsists). '
+                    LoggeCustomException.CONTROLLER_SINGLETON_ERROR
                     );
             }
         }
@@ -31,10 +29,7 @@ public with sharing class CustomSettingsControllerWrapper {
 
     private static Set<String> queryAllExsistingControllers() {
         Set<String> exsistingRecordsInDB = new Set<String>();
-        List<Logg_Controller__c> controllers = [
-            SELECT RecordTypeId
-            FROM Logg_Controller__c
-            ];
+        List<Logg_Controller__c> controllers = queryAllControllersWithRecordTypes();
         for (Logg_Controller__c controller : controllers) {
             exsistingRecordsInDB.add(
                 recordTypeMap.get(controller.RecordTypeId)
@@ -45,6 +40,15 @@ public with sharing class CustomSettingsControllerWrapper {
             );
 
         return exsistingRecordsInDB;
+    }
+
+    private static List<Logg_Controller__c> queryAllControllersWithRecordTypes() {
+        List<Logg_Controller__c> controllers = [
+            SELECT RecordTypeId
+            FROM Logg_Controller__c
+            ];
+
+        return controllers;
     }
 
     public static List<Logg_Controller__c> populateName(List<Logg_Controller__c> controllers) {

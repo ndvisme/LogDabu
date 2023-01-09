@@ -20,7 +20,8 @@ export default class createnewlogg extends NavigationMixin(LightningElement)  {
 
     connectedCallback() {
         console.log(`recordTypeId = ${this.currentPageReference.state.recordTypeId}`);
-        fields.RecordTypeId = this.currentPageReference.state.recordTypeId;
+        this.recordTypeId = this.currentPageReference.state.recordTypeId;
+        console.log(this.recordTypeId + this.recordTypeId);
     }
 
     handleSuccess(event) {

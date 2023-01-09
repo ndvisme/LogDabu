@@ -34,3 +34,9 @@ controller = [
     response,
     controller
     );
+
+ loggerWrapper = new LoggerWrapper(
+    request,
+    response,
+    controller
+    );

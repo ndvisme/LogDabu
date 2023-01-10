@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Log_Only_Failures__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>If checked with log only status codes &gt; 300</description>
+    <externalId>false</externalId>
+    <inlineHelpText>If checked with log only status codes &gt; 300</inlineHelpText>
+    <label>Log Only Failures</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

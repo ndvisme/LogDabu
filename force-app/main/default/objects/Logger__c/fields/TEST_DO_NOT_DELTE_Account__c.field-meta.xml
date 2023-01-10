@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TEST_DO_NOT_DELTE_Account__c</fullName>
+    <businessStatus>Hidden</businessStatus>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Needed for testing purposes.</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Needed for testing purposes.</inlineHelpText>
+    <label>TEST_DO_NOT_DELTE_Account</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Integration Loggers</relationshipLabel>
+    <relationshipName>Integration_Loggers</relationshipName>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Lookup</type>
+</CustomField>

@@ -5,6 +5,17 @@ public with sharing class LoggerUtils {
     public static final String DEFAULT_RECORD_NAME = 'API Logger';
 
 
+    public static List<ContentDocumentLink> queryRelatedContentDocumentLinkToThis(Logger__c logg) {
+        List<ContentDocumentLink> links = [
+            SELECT Id
+            FROM ContentDocumentLink
+            WHERE LinkedEntityId =: logg.Id
+            ];
+        System.debug('Quried these ContentVersion: ' + links);
+
+        return links;
+    }
+
     public static Integer queryAmountOfLoggerRecords() {
         return [SELECT count() FROM Logger__c];
     }

@@ -6,14 +6,31 @@ public with sharing class LoggerWrapper {
     public HttpResponseFileMaker responseFileMaker;
     public ContentVersion requestFile;
     public ContentVersion responseFile;
+    private HttpRequest givenRequest;
+    private HttpResponse givenResponse;
 
 
     public LoggerWrapper(HttpRequest request, HttpResponse response, Logg_Controller__c controller) {
         System.debug('In \'LoggerWrapper Constuctor\'.');
         try{
             this.logger = createLogger(request, response, controller);
-            this.requestFile = createRequestFile(request, this.logger);
-            this.responseFile = createResponseFile(response, this.logger);
+            this.givenRequest = request;
+            this.givenResponse = response;
+        }
+        catch(LoggeCustomException e) {
+            System.debug(
+                'The following exception has occurred: ' + e.getMessage()
+                );
+        }
+    }
+
+    public void create() {
+        try {
+            if (this.logger != null) {
+                insert this.logger;
+                this.requestFile = createRequestFile(this.givenRequest, this.logger);
+                this.responseFile = createResponseFile(this.givenResponse, this.logger);
+            }
         }
         catch(LoggeCustomException e) {
             System.debug(
@@ -64,7 +81,6 @@ public with sharing class LoggerWrapper {
         Logger__c logger = PopulateLoggerHelper.createBasic(controller);
         logger = PopulateLoggerHelper.fromRequest(request, logger);
         logger = PopulateLoggerHelper.fromResponse(response, logger);
-        update logger;
         System.debug('Created \'Logger__c\': ' + logger);
 
         return logger;

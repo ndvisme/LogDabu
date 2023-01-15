@@ -1,5 +1,4 @@
 // create custom controller:
-
 RecordType recordType = [
             SELECT Id
             FROM RecordType
@@ -30,7 +29,10 @@ HttpResponse response = new HttpResponse();
 response.setStatusCode(400);
 response.setHeader('content-type', 'json');
 response.setBody(json);
-
+Account acc = new Account(
+    Name = 'Jhon'
+);
+insert acc;
 
  // CREATE LOGGER
  LoggerWrapper loggerWrapper = new LoggerWrapper(
@@ -38,10 +40,13 @@ response.setBody(json);
     response,
     customController
     );
+loggerWrapper.create();
+loggerWrapper.setSObjectLookup('TEST_DO_NOT_DELTE_Account__c', acc.Id);
 
 loggerWrapper = new LoggerWrapper(
     request,
     response,
     customController
     );
-
+loggerWrapper.create();
+loggerWrapper.setSObjectLookup('TEST_DO_NOT_DELTE_Account__c', acc.Id);

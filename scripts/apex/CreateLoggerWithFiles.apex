@@ -27,12 +27,19 @@ controller = [
         LIMIT 1
     ];
 
+Account acc = new Account(
+    Name = 'Jhon'
+);
+insert acc;
+
 // CREATE LOGGER
  LoggerWrapper loggerWrapper = new LoggerWrapper(
     request,
     response,
     controller
     );
+loggerWrapper.create();
+loggerWrapper.setSObjectLookup('TEST_DO_NOT_DELTE_Account__c', acc.Id);
 
 // REQUEST #2
 jsonAsString = '{"Name": "Nadav"}';
@@ -51,14 +58,17 @@ response.setStatusCode(200);
 response.setHeader('content-type', 'json');
 response.setBody(json);
 
+loggerWrapper = new LoggerWrapper(
+    request,
+    response,
+    controller
+    );
+loggerWrapper.create();
+loggerWrapper.setSObjectLookup('TEST_DO_NOT_DELTE_Account__c', acc.Id);
  loggerWrapper = new LoggerWrapper(
     request,
     response,
     controller
     );
-
- loggerWrapper = new LoggerWrapper(
-    request,
-    response,
-    controller
-    );
+loggerWrapper.create();
+loggerWrapper.setSObjectLookup('TEST_DO_NOT_DELTE_Account__c', acc.Id);

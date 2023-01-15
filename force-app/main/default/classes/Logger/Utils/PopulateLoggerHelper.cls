@@ -6,7 +6,6 @@ public with sharing class PopulateLoggerHelper {
             Name = recordName,
             Logger_Controller__c = controller.Id
         );
-		insert logger;
         System.debug(
             'Created this basic Logger__c record: \n' +
             logger

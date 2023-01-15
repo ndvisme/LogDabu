@@ -64,6 +64,7 @@ public with sharing class LoggerControllerTest {
             respones,
             controller
             );
+        loggerWrapper.create();
         List<Logger__c> loggers = [SELECT Id FROM Logger__c];
 
         System.assertEquals(0, loggers.size());
@@ -82,6 +83,7 @@ public with sharing class LoggerControllerTest {
             respones,
             controller
             );
+        loggerWrapper.create();
         List<Logger__c> loggers = [SELECT Id FROM Logger__c];
 
         System.assertEquals(1, loggers.size());
@@ -130,6 +132,7 @@ public with sharing class LoggerControllerTest {
             respones,
             controller
             );
+        loggerWrapper.create();
         List<Logger__c> loggers = [
             SELECT Name
             FROM Logger__c
@@ -157,6 +160,7 @@ public with sharing class LoggerControllerTest {
             respones,
             controller
             );
+        logger.create();
         List<Logger__c> loggers = [SELECT Name FROM Logger__c];
 
         System.assertEquals(1, loggers.size());

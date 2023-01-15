@@ -58,6 +58,7 @@ public with sharing class FileMakerTest {
             response,
             controller
             );
+        loggerWrapper.create();
         ContentVersion requestBodyFile = loggerWrapper.requestFileMaker.requestfile;
         Integer numOfLines = getNumberOfTxtLinesFrom(requestBodyFile);
 

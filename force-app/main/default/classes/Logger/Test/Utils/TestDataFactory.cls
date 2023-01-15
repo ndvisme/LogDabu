@@ -7,6 +7,7 @@ public with sharing class TestDataFactory {
             createOKHTTPJSONResponse(),
             createDefultCOntroller()
         );
+        wrapper.create();
         System.debug('Created this LoggerWrapper: \n ' + wrapper);
 
         return wrapper;
@@ -18,6 +19,7 @@ public with sharing class TestDataFactory {
             createOKHTTPJSONResponse(),
             createCustomController()
         );
+        wrapper.create();
         System.debug('Created this LoggerWrapper: \n ' + wrapper);
 
         return wrapper;

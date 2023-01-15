@@ -1,15 +1,27 @@
-# READEME
+# Integrations Loger
+
+A brief description of what this project does and who it's for
+
+## Deployment
+
+To deploy this project run
+
+```bash
+
+```
+
+## Salesforce Admin
 
 ## Code
 1. Query/Create wanted 'Controller':
-![Alt text](./Images/ReadMe/queryController.png "Query")
+![Alt text](./Images/ReadMe/Dev/queryController.png "Query")
 
 2. Call the 'Logger Wrapper' constructor.
     - Be sure to give it the apropriate:
         - HTTPRequest
         - HTTPResponse
         - 'Logger Controller'
-![Alt text](./Images/ReadMe/LoggerWrapper.png "Constructor")
+![Alt text](./Images/ReadMe/Dev/LoggerWrapper.png "Constructor")
 
 3. Call the 'create' function (this will insert the 'log' record to the DB).
-![Alt text](./Images/ReadMe/createFunc.png "Insert function")
+![Alt text](./Images/ReadMe/Dev/createFunc.png "Insert function")

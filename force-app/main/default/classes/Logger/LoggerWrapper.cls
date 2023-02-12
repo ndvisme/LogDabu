@@ -1,6 +1,7 @@
 public with sharing class LoggerWrapper {
 
 
+    public Logg_Controller__c controller;
     public Logger__c logger;
     public FileMakerFromHTTP requestFileMaker;
     public HttpResponseFileMaker responseFileMaker;
@@ -13,6 +14,7 @@ public with sharing class LoggerWrapper {
     public LoggerWrapper(HttpRequest request, HttpResponse response, Logg_Controller__c controller) {
         System.debug('In \'LoggerWrapper Constuctor\'.');
         try{
+            this.controller = controller;
             this.logger = createLogger(request, response, controller);
             this.givenRequest = request;
             this.givenResponse = response;
@@ -27,9 +29,7 @@ public with sharing class LoggerWrapper {
     public void create() {
         try {
             if (this.logger != null) {
-                insert this.logger;
-                this.requestFile = createRequestFile(this.givenRequest, this.logger);
-                this.responseFile = createResponseFile(this.givenResponse, this.logger);
+                insertRecordsToDB();
             }
         }
         catch(LoggeCustomException e) {
@@ -102,5 +102,29 @@ public with sharing class LoggerWrapper {
             'Updated SObject lookup in this logger: ' +
             this.logger
             );
+    }
+
+    private void insertRecordsToDB() {
+        if (this.controller.Put_Data_In_Fields__c) {
+            this.logger = putRequestAndResponseInFields(
+                this.givenRequest,
+                this.givenResponse
+                );
+            insert this.logger;
+        }
+        else {
+            insert this.logger;
+            this.requestFile = createRequestFile(this.givenRequest, this.logger);
+            this.responseFile = createResponseFile(this.givenResponse, this.logger);
+        }
+    }
+
+    private Logger__c putRequestAndResponseInFields(HttpRequest request, HttpResponse response) {
+        String prettyResBody = FileMakerUtils.makeBodyToPrettyJson(response);
+        String prettyReqBody = FileMakerUtils.makeRequestBodyToPrettyJson(request);
+        this.logger.Response_Body__c = prettyResBody;
+        this.logger.Request_Body__c = prettyReqBody;
+
+        return this.logger;
     }
 }

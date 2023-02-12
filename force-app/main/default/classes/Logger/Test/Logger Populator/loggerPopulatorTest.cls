@@ -42,22 +42,43 @@ public with sharing class loggerPopulatorTest {
 
     @isTest
     public static void test_populateReqAndResInFields() {
-        // create controller with checkbox on
-        // create log record
-        // check that fields have value
-        // no txt files attach
-        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
-        controller.Put_Data_In_Fields__c = true;
-        update controller;
+        Logg_Controller__c controller = createControllerWithDataInFields(true);
+        LoggerWrapper wrapper = new LoggerWrapper(
+            TestDataFactory.createPostJSONRequest(),
+            TestDataFactory.createOKHTTPJSONResponse(),
+            controller
+        );
+        wrapper.create();
 
-
+        System.assert(wrapper.logger.Request_Body__c != null);
+        System.assert(wrapper.logger.Response_Body__c != null);
+        System.assert(wrapper.requestFile == null);
+        System.assert(wrapper.responseFile == null);
     }
 
     @isTest
     public static void test_populateReqAndResInTxtFile() {
-        // create controller with checkbox off
-        // create log record
-        // check that fields have no values
-        // txt files attach
+        Logg_Controller__c controller = createControllerWithDataInFields(false);
+        LoggerWrapper wrapper = new LoggerWrapper(
+            TestDataFactory.createPostJSONRequest(),
+            TestDataFactory.createOKHTTPJSONResponse(),
+            controller
+        );
+        wrapper.create();
+
+        System.assert(wrapper.logger.Request_Body__c == null);
+        System.assert(wrapper.logger.Response_Body__c == null);
+        System.assert(wrapper.requestFile != null);
+        System.assert(wrapper.responseFile != null);
+    }
+
+
+    private static Logg_Controller__c createControllerWithDataInFields(Boolean putDataInFields) {
+        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
+        controller.Put_Data_In_Fields__c = putDataInFields;
+        update controller;
+        System.debug('Updated controller with data in field: ' + controller);
+
+        return controller;
     }
 }

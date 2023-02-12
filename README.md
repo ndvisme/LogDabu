@@ -22,7 +22,7 @@ To deploy this project run
 3. Ask developer in insert needed code to start logging.
 
 
-## Code
+## Developer
 1. Query/Create wanted 'Controller':
 ![Alt text](./Images/ReadMe/Dev/queryController.png "Query")
 

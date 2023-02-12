@@ -38,4 +38,26 @@ public with sharing class loggerPopulatorTest {
                 );
         }
     }
+
+
+    @isTest
+    public static void test_populateReqAndResInFields() {
+        // create controller with checkbox on
+        // create log record
+        // check that fields have value
+        // no txt files attach
+        Logg_Controller__c controller = TestDataFactory.createDefultCOntroller();
+        controller.Put_Data_In_Fields__c = true;
+        update controller;
+
+
+    }
+
+    @isTest
+    public static void test_populateReqAndResInTxtFile() {
+        // create controller with checkbox off
+        // create log record
+        // check that fields have no values
+        // txt files attach
+    }
 }

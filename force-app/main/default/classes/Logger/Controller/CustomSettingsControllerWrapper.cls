@@ -6,10 +6,11 @@ public with sharing class CustomSettingsControllerWrapper {
     public static final String RECORDTYPE_NAME_TEST_DUMMY = 'Dummy For Testing Porpuses';
 
 
+
     public static void checkThatAreSingletons(List<Logg_Controller__c> controllers) {
         for (Logg_Controller__c controller : controllers) {
             if (notSingleton(controller)) {
-                controller.addError(
+                throw new LoggeCustomException(
                     LoggeCustomException.CONTROLLER_SINGLETON_ERROR
                     );
             }
@@ -100,7 +101,7 @@ public with sharing class CustomSettingsControllerWrapper {
 
     public static Logg_Controller__c queryCntrollerAllFields(String id) {
         return [
-            SELECT Log_Only_Failures__c, Logger_Record_Names__c, Name
+            SELECT Log_Only_Failures__c, Logger_Record_Names__c, Name, 	Put_Data_In_Fields__c
             FROM Logg_Controller__c
             WHERE Id =: id
             LIMIT 1

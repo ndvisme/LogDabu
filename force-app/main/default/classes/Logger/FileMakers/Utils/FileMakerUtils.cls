@@ -60,7 +60,7 @@ public with sharing class FileMakerUtils {
         return contentVersion;
     }
 
-    private static String makeBodyToPrettyJson(HttpResponse response) {
+    public static String makeBodyToPrettyJson(HttpResponse response) {
         Map<String, Object> jsonMap = (Map<String, Object>) JSON.deserializeUntyped(response.getBody());
         String prettyJsonString = JSON.serializePretty(jsonMap);
         System.debug('prettyJsonString: ' + prettyJsonString);
@@ -69,7 +69,7 @@ public with sharing class FileMakerUtils {
     }
 
 
-    private static String makeRequestBodyToPrettyJson(HttpRequest request) {
+    public static String makeRequestBodyToPrettyJson(HttpRequest request) {
      	Map<String, Object> jsonMap = (Map<String, Object>) JSON.deserializeUntyped(request.getBody());
         String prettyJsonString = JSON.serializePretty(jsonMap);
         System.debug('prettyJsonString: ' + prettyJsonString);

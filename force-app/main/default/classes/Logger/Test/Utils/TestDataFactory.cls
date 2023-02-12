@@ -67,7 +67,8 @@ public with sharing class TestDataFactory {
 
     private static Logg_Controller__c createControllerWithThisRecordTypeId(String recordTypeId) {
         Logg_Controller__c controller = new Logg_Controller__c(
-            RecordTypeId = recordTypeId
+            RecordTypeId = recordTypeId,
+            Put_Data_In_Fields__c = false
         );
         insert controller;
         controller = CustomSettingsControllerWrapper.queryCntrollerAllFields(

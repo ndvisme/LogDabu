@@ -6,10 +6,11 @@ public with sharing class CustomSettingsControllerWrapper {
     public static final String RECORDTYPE_NAME_TEST_DUMMY = 'Dummy For Testing Porpuses';
 
 
+
     public static void checkThatAreSingletons(List<Logg_Controller__c> controllers) {
         for (Logg_Controller__c controller : controllers) {
             if (notSingleton(controller)) {
-                controller.addError(
+                throw new LoggeCustomException(
                     LoggeCustomException.CONTROLLER_SINGLETON_ERROR
                     );
             }

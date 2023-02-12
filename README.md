@@ -11,6 +11,16 @@ To deploy this project run
 ```
 
 ## Salesforce Admin
+1. Create Controller RecordType:
+    (each intagraton must have his own unique RecordType!)
+    ![Alt text](./Images/ReadMe/Admin/recordType.png "Create RecordType")
+2. Create Controller
+    - ![Alt text](./Images/ReadMe/Admin/ChooseRecordType.png "Choose Record Type")
+
+    - ![Alt text](./Images/ReadMe/Admin/CreateController.png "Configure Controller")
+
+3. Ask developer in insert needed code to start logging.
+
 
 ## Code
 1. Query/Create wanted 'Controller':

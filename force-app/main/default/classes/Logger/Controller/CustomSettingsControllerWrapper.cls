@@ -100,7 +100,7 @@ public with sharing class CustomSettingsControllerWrapper {
 
     public static Logg_Controller__c queryCntrollerAllFields(String id) {
         return [
-            SELECT Log_Only_Failures__c, Logger_Record_Names__c, Name
+            SELECT Log_Only_Failures__c, Logger_Record_Names__c, Name, 	Put_Data_In_Fields__c
             FROM Logg_Controller__c
             WHERE Id =: id
             LIMIT 1

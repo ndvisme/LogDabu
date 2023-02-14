@@ -4,7 +4,9 @@ A brief description of what this project does and who it's for
 
 ## Deployment
 
-To deploy this project run
+To deploy this package:
+1. Open this URL & install:
+    https://login.salesforce.com/packaging/installPackage.apexp?p0=04t8d000000trqJ
 
 ```bash
 

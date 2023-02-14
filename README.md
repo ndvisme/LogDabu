@@ -1,18 +1,39 @@
-# Salesforce DX Project: Next Steps
+# Integrations Loger
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+A brief description of what this project does and who it's for
 
-## How Do You Plan to Deploy Your Changes?
+## Deployment
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+To deploy this package:
+1. Open this URL & install:
+    https://login.salesforce.com/packaging/installPackage.apexp?p0=04t8d000000trqJ
 
-## Configure Your Salesforce DX Project
+```bash
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+```
 
-## Read All About It
+## Salesforce Admin
+1. Create Controller RecordType:
+    (each intagraton must have his own unique RecordType!)
+    ![Alt text](./Images/ReadMe/Admin/recordType.png "Create RecordType")
+2. Create Controller
+    - ![Alt text](./Images/ReadMe/Admin/ChooseRecordType.png "Choose Record Type")
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+    - ![Alt text](./Images/ReadMe/Admin/CreateController.png "Configure Controller")
+
+3. Ask developer in insert needed code to start logging.
+
+
+## Developer
+1. Query/Create wanted 'Controller':
+![Alt text](./Images/ReadMe/Dev/queryController.png "Query")
+
+2. Call the 'Logger Wrapper' constructor.
+    - Be sure to give it the apropriate:
+        - HTTPRequest
+        - HTTPResponse
+        - 'Logger Controller'
+![Alt text](./Images/ReadMe/Dev/LoggerWrapper.png "Constructor")
+
+3. Call the 'create' function (this will insert the 'log' record to the DB).
+![Alt text](./Images/ReadMe/Dev/createFunc.png "Insert function")

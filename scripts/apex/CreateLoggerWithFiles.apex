@@ -21,7 +21,7 @@ response.setBody(json);
 Logg_Controller__c controller = new Logg_Controller__c();
 insert controller;
 controller = [
-        SELECT Log_Only_Failures__c, Logger_Record_Names__c, Name
+        SELECT Log_Only_Failures__c, Logger_Record_Names__c, Name, Put_Data_In_Fields__c
         FROM Logg_Controller__c
         WHERE Id =: controller.id
         LIMIT 1
